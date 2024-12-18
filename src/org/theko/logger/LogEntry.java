@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Represents a log entry containing information about the log level, message,
- * timestamp, caller details, and stack trace.
+ * timestamp, caller details, stack trace, and thread name.
  * <p>
  * This class provides methods to retrieve log details and display or format
  * them for output.
@@ -38,6 +38,11 @@ public class LogEntry {
     protected StackTraceInfo stackTrace;
 
     /**
+     * The name of the thread where the log was created.
+     */
+    protected String threadName;
+
+    /**
      * Constructs a log entry with the provided details.
      *
      * @param level      The severity level of the log.
@@ -45,13 +50,15 @@ public class LogEntry {
      * @param time       The timestamp when the log was created.
      * @param caller     Information about the caller (method/class).
      * @param stackTrace Stack trace information for the log.
+     * @param threadName The name of the thread where the log was created.
      */
-    public LogEntry(LogLevel level, String message, long time, CallerInfo caller, StackTraceInfo stackTrace) {
+    public LogEntry(LogLevel level, String message, long time, CallerInfo caller, StackTraceInfo stackTrace, String threadName) {
         this.level = level;
         this.message = message;
         this.time = time;
         this.caller = caller;
         this.stackTrace = stackTrace;
+        this.threadName = threadName;
     }
 
     /**
@@ -110,6 +117,24 @@ public class LogEntry {
     }
 
     /**
+     * Returns the name of the thread where the log was created.
+     *
+     * @return The thread name.
+     */
+    public String getThreadName() {
+        return threadName;
+    }
+
+    /**
+     * Sets the name of the thread where the log was created.
+     *
+     * @param threadName The thread name.
+     */
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
+
+    /**
      * Formats the log entry into a readable string representation using the
      * default log pattern.
      *
@@ -117,7 +142,7 @@ public class LogEntry {
      */
     @Override
     public String toString() {
-        String pattern = "[-time<HH:mm:ss:SSS, START>] [-type] | [-class] > [-method] > -message";
+        String pattern = "[-time<HH:mm:ss:SSS, START>] [-type] | [-class] > [-method] > -message [-thread]";
         return LogFormatter.format(this, pattern);
     }
 }

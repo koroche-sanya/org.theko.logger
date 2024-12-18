@@ -6,7 +6,7 @@ import java.util.List;
  * A global logger wrapper that delegates to a shared static Logger instance.
  * Provides global logging access across the entire application.
  */
-public class GlobalLogger implements ILogger {
+public class GlobalLogger {
     /**
      * A single static Logger instance shared across all GlobalLogger instances.
      */
@@ -20,7 +20,11 @@ public class GlobalLogger implements ILogger {
     // Static initializer to set up the shared logger instance
     static {
         loggerOutput = new LoggerOutput(System.out, LogLevel.INFO);
-        logger = new Logger(loggerOutput);
+        logger = new Logger(loggerOutput, 2);
+    }
+
+    private GlobalLogger () {
+        throw new IllegalAccessError("Cannot make instance of GlobalLogger!");
     }
 
     /**
@@ -29,8 +33,7 @@ public class GlobalLogger implements ILogger {
      * @param level   The log level (DEBUG, INFO, WARN, etc.).
      * @param message The message to be logged.
      */
-    @Override
-    public void log(LogLevel level, String message) {
+    public static void log(LogLevel level, String message) {
         synchronized (logger) { // Ensure thread safety
             logger.log(level, message);
         }
@@ -41,8 +44,7 @@ public class GlobalLogger implements ILogger {
      *
      * @return The last log information.
      */
-    @Override
-    public LogEntry getLastLog() {
+    public static LogEntry getLastLog() {
         synchronized (logger) {
             return logger.getLastLog();
         }
@@ -53,8 +55,7 @@ public class GlobalLogger implements ILogger {
      *
      * @return A list of all log information.
      */
-    @Override
-    public List<LogEntry> getAllLogs() {
+    public static List<LogEntry> getAllLogs() {
         synchronized (logger) {
             return logger.getAllLogs();
         }
@@ -65,8 +66,7 @@ public class GlobalLogger implements ILogger {
      *
      * @return An array of all log information.
      */
-    @Override
-    public LogEntry[] getAllLogsArray() {
+    public static LogEntry[] getAllLogsArray() {
         synchronized (logger) {
             return logger.getAllLogsArray();
         }

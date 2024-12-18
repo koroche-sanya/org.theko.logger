@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * Result:    "[194:846] ERROR java.base > StringBuilder > append() > Cannot do action"
  * 
  * Pattern 3: "-time<SSS, START> [-type] | -message"
- * Result:    "56724 WARNING | Audio samples count, is too big. Simplifying..."
+ * Result:    "56724 WARN | Audio samples count, is too big. Simplifying..."
  * </pre>
  */
 public class LogFormatter {
