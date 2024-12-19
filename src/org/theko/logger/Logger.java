@@ -2,6 +2,7 @@ package org.theko.logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Logger class that implements {@link ILogger}. 
@@ -25,6 +26,8 @@ public class Logger implements ILogger {
      * Offset value used to determine the caller's position in the stack trace.
      */
     private final int stackFunctionOffset;
+
+    private Consumer<LogEntry> onLogCreated; // Handler for log creation events
 
     /**
      * Constructs a Logger instance with the specified {@link LoggerOutput} and stack trace offset.
@@ -93,6 +96,10 @@ public class Logger implements ILogger {
         if (loggerOutput != null) {
             loggerOutput.addToOutput(log);
         }
+
+        if (onLogCreated != null) {
+            onLogCreated.accept(log);
+        }
     }
 
     /**
@@ -102,6 +109,15 @@ public class Logger implements ILogger {
      */
     protected StackTraceElement[] getStackTrace() {
         return Thread.currentThread().getStackTrace();
+    }
+
+    /**
+     * Sets the handler for when a new log is created.
+     *
+     * @param handler A consumer that takes the last log entry as an argument.
+     */
+    public void setOnLogCreated(Consumer<LogEntry> handler) {
+        this.onLogCreated = handler;
     }
 
     /**

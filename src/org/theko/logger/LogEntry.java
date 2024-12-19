@@ -53,6 +53,10 @@ public class LogEntry {
      * @param threadName The name of the thread where the log was created.
      */
     public LogEntry(LogLevel level, String message, long time, CallerInfo caller, StackTraceInfo stackTrace, String threadName) {
+        if (level == LogLevel.NONE) {
+            throw new IllegalArgumentException("Log level cannot be set to NONE.");
+        }
+        
         this.level = level;
         this.message = message;
         this.time = time;
@@ -142,7 +146,6 @@ public class LogEntry {
      */
     @Override
     public String toString() {
-        String pattern = "[-time<HH:mm:ss:SSS, START>] [-type] | [-class] > [-method] > -message [-thread]";
-        return LogFormatter.format(this, pattern);
+        return LogFormatter.format(this, LogFormatter.DEFAULT_INFO);
     }
 }

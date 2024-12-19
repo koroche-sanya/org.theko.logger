@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.util.Scanner;
 
 import org.theko.logger.GlobalLogger;
+import org.theko.logger.LogFormatter;
 import org.theko.logger.LogLevel;
 
 public class Test1 {
@@ -11,6 +12,7 @@ public class Test1 {
         // Text reverse utility
         try {
             GlobalLogger.getLoggerOutput().setPreferredLevel(LogLevel.DEBUG);
+            GlobalLogger.getLoggerOutput().setPattern(LogFormatter.DETAILED_INFO);
             GlobalLogger.getLoggerOutput().setOutputStream(new FileOutputStream("test1.log"));
 
             GlobalLogger.log(LogLevel.DEBUG, "Scanner initializing...");

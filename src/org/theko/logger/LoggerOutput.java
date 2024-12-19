@@ -111,4 +111,12 @@ public class LoggerOutput {
             }
         }
     }
+
+    public void close() {
+        try {
+            os.close();
+        } catch (IOException ioex) {
+            ioex.printStackTrace();
+        }
+    }
 }

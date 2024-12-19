@@ -12,6 +12,8 @@ public class CallerInfo {
      */
     protected StackTraceElement element;
 
+    
+
     /**
      * Constructs a {@link CallerInfo} instance with the provided {@link StackTraceElement}.
      * 
@@ -62,7 +64,7 @@ public class CallerInfo {
      * 
      * @return {@code true} if the method is native, {@code false} otherwise.
      */
-    public boolean isMethodNative() {
+    public boolean isNativeMethod() {
         return element.isNativeMethod();
     }
 
