@@ -3,17 +3,19 @@ package org.theko.logger;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * LoggerOutput is responsible for outputting log entries to an {@link OutputStream}.
+ * LoggerOutput is responsible for outputting log entries to multiple {@link OutputStream} objects.
  * It filters log entries based on the preferred log level and formats them according to a specified pattern.
  */
 public class LoggerOutput {
     
     /**
-     * The {@link OutputStream} where log entries are written to.
+     * The list of {@link OutputStream}s where log entries are written to.
      */
-    protected OutputStream os;
+    protected List<OutputStream> outputStreams;
     
     /**
      * The preferred log level. Only log entries with a level equal to or higher than this level will be output.
@@ -27,13 +29,12 @@ public class LoggerOutput {
     protected String pattern;
 
     /**
-     * Constructs a LoggerOutput instance with the specified output stream and preferred log level.
+     * Constructs a LoggerOutput instance with the specified output streams and preferred log level.
      * 
-     * @param os the {@link OutputStream} where log entries will be written.
      * @param preferredLevel the {@link LogLevel} representing the minimum level of logs to output.
      */
-    public LoggerOutput(OutputStream os, LogLevel preferredLevel) {
-        this.os = os;
+    public LoggerOutput(LogLevel preferredLevel) {
+        this.outputStreams = new ArrayList<>();
         this.preferredLevel = preferredLevel;
         this.pattern = "[-time<HH:mm:ss:SSS, UTC>] -type | [-class.-method] > -message";
     }
@@ -75,26 +76,35 @@ public class LoggerOutput {
     }
 
     /**
-     * Gets the current {@link OutputStream} where log entries are being written.
+     * Gets the list of {@link OutputStream}s where log entries are being written.
      * 
-     * @return the {@link OutputStream} used for logging.
+     * @return the list of {@link OutputStream}s used for logging.
      */
-    public OutputStream getOutputStream() {
-        return os;
+    public List<OutputStream> getOutputStreams() {
+        return outputStreams;
     }
 
     /**
-     * Sets the {@link OutputStream} where log entries will be written.
+     * Adds an {@link OutputStream} to the list of output streams.
      * 
-     * @param os the {@link OutputStream} to be set for logging.
+     * @param os the {@link OutputStream} to be added for logging.
      */
-    public void setOutputStream(OutputStream os) {
-        this.os = os;
+    public void addOutputStream(OutputStream os) {
+        if (os != null) {
+            outputStreams.add(os);
+        }
     }
 
     /**
-     * Adds a log entry to the output stream if its level is equal to or higher than the preferred level.
-     * The log entry is formatted using the specified pattern before being written to the output stream.
+     * Removes all {@link OutputStream}s from the list.
+     */
+    public void removeAllOutputStreams() {
+        outputStreams.clear();
+    }
+
+    /**
+     * Adds a log entry to all output streams if its level is equal to or higher than the preferred level.
+     * The log entry is formatted using the specified pattern before being written to the output streams.
      * 
      * @param log the {@link LogEntry} to be added to the output.
      */
@@ -104,19 +114,24 @@ public class LoggerOutput {
         }
         if (log.level.ordinal() >= preferredLevel.ordinal()) {
             String formatted = LogFormatter.format(log, pattern) + "\n";
-            try {
-                os.write(formatted.getBytes(StandardCharsets.UTF_8));
-            } catch (IOException ioex) {
-                ioex.printStackTrace();
+            byte[] bytes = formatted.getBytes(StandardCharsets.UTF_8);
+            for (OutputStream os : outputStreams) {
+                try {
+                    os.write(bytes);
+                } catch (IOException ioex) {
+                    ioex.printStackTrace();
+                }
             }
         }
     }
 
     public void close() {
-        try {
-            os.close();
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
+        for (OutputStream os : outputStreams) {
+            try {
+                os.close();
+            } catch (IOException ioex) {
+                ioex.printStackTrace();
+            }
         }
     }
 }
