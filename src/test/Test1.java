@@ -13,7 +13,7 @@ public class Test1 {
         try {
             GlobalLogger.getLoggerOutput().setPreferredLevel(LogLevel.DEBUG);
             GlobalLogger.getLoggerOutput().setPattern(LogFormatter.DETAILED_INFO);
-            GlobalLogger.getLoggerOutput().setOutputStream(new FileOutputStream("test1.log"));
+            GlobalLogger.getLoggerOutput().addOutputStream(new FileOutputStream("test1.log"));
 
             GlobalLogger.log(LogLevel.DEBUG, "Scanner initializing...");
 

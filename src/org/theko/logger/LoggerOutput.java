@@ -103,6 +103,15 @@ public class LoggerOutput {
     }
 
     /**
+     * Checks if there are any {@link OutputStream}s in the list.
+     * 
+     * @return true if the list contains at least one {@link OutputStream}, false otherwise.
+     */
+    public boolean containsOutputStream() {
+        return outputStreams != null && !outputStreams.isEmpty();
+    }
+
+    /**
      * Adds a log entry to all output streams if its level is equal to or higher than the preferred level.
      * The log entry is formatted using the specified pattern before being written to the output streams.
      * 

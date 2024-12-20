@@ -19,7 +19,8 @@ public class GlobalLogger {
 
     // Static initializer to set up the shared logger instance
     static {
-        loggerOutput = new LoggerOutput(System.out, LogLevel.INFO);
+        loggerOutput = new LoggerOutput(LogLevel.INFO);
+        loggerOutput.addOutputStream(System.out);
         logger = new Logger(loggerOutput, 2);
     }
 

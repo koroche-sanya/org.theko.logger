@@ -14,7 +14,7 @@ public class Test4 {
             // Set up logger
             GlobalLogger.getLoggerOutput().setPreferredLevel(LogLevel.DEBUG);
             GlobalLogger.getLoggerOutput().setPattern(LogFormatter.DETAILED_INFO);
-            GlobalLogger.getLoggerOutput().setOutputStream(new FileOutputStream("test4.log"));
+            GlobalLogger.getLoggerOutput().addOutputStream(new FileOutputStream("test4.log"));
 
             TaskRunner taskRunner = new TaskRunner();
             taskRunner.runTask1();

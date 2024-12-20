@@ -16,7 +16,7 @@ public class Test3 {
             // Set up logger
             GlobalLogger.getLoggerOutput().setPreferredLevel(LogLevel.DEBUG);
             GlobalLogger.getLoggerOutput().setPattern(LogFormatter.DEFAULT_INFO);
-            GlobalLogger.getLoggerOutput().setOutputStream(new FileOutputStream("test3.log"));
+            GlobalLogger.getLoggerOutput().addOutputStream(new FileOutputStream("test3.log"));
 
             // Executor service to run threads
             ExecutorService executor = Executors.newFixedThreadPool(3);

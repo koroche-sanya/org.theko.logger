@@ -22,7 +22,7 @@ public class Demo1 extends JFrame {
     public class GameLogger {
         static {
             // Set the output stream for logs
-            GlobalLogger.getLoggerOutput().setOutputStream(System.out);
+            GlobalLogger.getLoggerOutput().addOutputStream(System.out);
             GlobalLogger.getLoggerOutput().setPattern("[HH:mm:ss] [Thread: -thread] [-class > -method] > -message");
         }
 

@@ -40,7 +40,7 @@ public class Logger implements ILogger {
         this.logs = new ArrayList<>();
         this.stackFunctionOffset = stackFunctionOffset;
 
-        if (loggerOutput == null || loggerOutput.os == null) {
+        if (loggerOutput == null || !loggerOutput.containsOutputStream()) {
             System.err.println("LoggerOutput passed is null.");
             this.log(LogLevel.WARN, "LoggerOutput passed is null.");
         }

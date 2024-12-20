@@ -13,7 +13,7 @@ public class Test2 {
             // Set logger properties
             GlobalLogger.getLoggerOutput().setPreferredLevel(LogLevel.DEBUG);
             GlobalLogger.getLoggerOutput().setPattern(LogFormatter.DEFAULT_INFO);
-            GlobalLogger.getLoggerOutput().setOutputStream(new FileOutputStream("test2.log"));
+            GlobalLogger.getLoggerOutput().addOutputStream(new FileOutputStream("test2.log"));
 
             // Log the start of the program
             GlobalLogger.log(LogLevel.DEBUG, "Starting Fibonacci calculation...");
