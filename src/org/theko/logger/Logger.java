@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Sasha Soloviev
+ * Copyright (c) 2024 Alex Krasnobaev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Logger class that implements {@link ILogger}. 
- * This class is responsible for logging messages at various levels (DEBUG, INFO, WARN, etc.) 
+ * Logger class that implements {@link ILogger}.
+ * This class is responsible for logging messages at various levels (DEBUG, INFO, WARN, etc.)
  * and outputting them to a specified {@link LoggerOutput}.
  * It stores log entries and provides access to them.
  */
@@ -55,7 +55,7 @@ public class Logger implements ILogger {
 
     /**
      * Constructs a Logger instance with the specified {@link LoggerOutput} and stack trace offset.
-     * 
+     *
      * @param loggerOutput       The {@link LoggerOutput} where the logs will be written.
      * @param stackFunctionOffset Offset for identifying the caller in the stack trace.
      */
@@ -110,9 +110,9 @@ public class Logger implements ILogger {
                 level,
                 message,
                 System.currentTimeMillis(),
+                Thread.currentThread().getName(),
                 new CallerInfo(callerElement),
-                new StackTraceInfo(stackTrace),
-                Thread.currentThread().getName()
+                new StackTraceInfo(stackTrace)
             );
         logs.add(log);
         

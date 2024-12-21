@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Sasha Soloviev
+ * Copyright (c) 2024 Alex Krasnobaev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -69,24 +69,24 @@ public class LogEntry {
     /**
      * Constructs a log entry with the provided details.
      *
-     * @param level      The severity level of the log.
-     * @param message    The log message.
-     * @param time       The timestamp when the log was created.
-     * @param caller     Information about the caller (method/class).
-     * @param stackTrace Stack trace information for the log.
-     * @param threadName The name of the thread where the log was created.
+     * @param level       The severity level of the log.
+     * @param message     The log message.
+     * @param time        The timestamp when the log was created.
+     * @param threadName  The name of the thread where the log was created.
+     * @param caller      Information about the caller (method/class).
+     * @param stackTrace  Stack trace information for the log.
      */
-    public LogEntry(LogLevel level, String message, long time, CallerInfo caller, StackTraceInfo stackTrace, String threadName) {
+    public LogEntry(LogLevel level, String message, long time, String threadName, CallerInfo caller, StackTraceInfo stackTrace) {
         if (level == LogLevel.NONE) {
             throw new IllegalArgumentException("Log level cannot be set to NONE.");
         }
         
         this.level = level;
         this.message = message;
+        this.threadName = threadName;
         this.time = time;
         this.caller = caller;
         this.stackTrace = stackTrace;
-        this.threadName = threadName;
     }
 
     /**
