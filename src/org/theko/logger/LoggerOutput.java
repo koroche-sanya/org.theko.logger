@@ -136,6 +136,16 @@ public class LoggerOutput {
     }
 
     /**
+     * Clears output streams list, and set single
+     * 
+     * @param os the {@link OutputStream} to be added for logging.
+     */
+    public void setSingleOutputStream(OutputStream os) {
+        outputStreams.clear();
+        outputStreams.add(os);
+    }
+
+    /**
      * Adds a log entry to all output streams if its level is equal to or higher than the preferred level.
      * The log entry is formatted using the specified pattern before being written to the output streams.
      * 
